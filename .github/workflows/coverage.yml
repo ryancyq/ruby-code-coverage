@@ -34,7 +34,8 @@ jobs:
       - run: gem install rake rspec simplecov simplecov-html simplecov-cobertura
       - run: rake coverage:run
 
-      - run: ls -alR coverage
+      - run: sudo apt install tree
+      - run: tree -a coverage
 
       - uses: actions/upload-artifact@v4
         with:
