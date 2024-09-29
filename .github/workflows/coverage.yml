@@ -43,3 +43,36 @@ jobs:
           path: coverage/ruby-*
           include-hidden-files: true
           retention-days: 1
+
+  report:
+    name: "Report to CodeCov"
+    needs: [coverage]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3"
+
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: coverage-ruby-*
+          path: coverage-results
+          merge-multiple: true
+
+      - run: gem install rake rspec simplecov simplecov-html simplecov-cobertura
+      - run: rake coverage:report
+        env:
+          COV_DIR: coverage-results
+
+      - run: sudo apt install tree
+      - run: tree -a coverage-results
+      - run: tree -a coverage
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          files: coverage-results/coverage.xml
+          token: ${{ secrets.CODECOV_TOKEN }}
+          fail_ci_if_error: true
