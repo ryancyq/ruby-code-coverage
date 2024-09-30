@@ -51,15 +51,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: "3"
-
       - uses: actions/download-artifact@v4
         with:
           pattern: coverage-ruby-*
           path: coverage-results
           merge-multiple: true
+
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3"
 
       - run: gem install rake rspec simplecov simplecov-html simplecov-cobertura
       - run: rake coverage:report
