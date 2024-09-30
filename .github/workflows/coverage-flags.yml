@@ -1,4 +1,4 @@
-name: Code Coverage with CodeCov Flags
+name: CodeCov Flags
 on:
   push:
     branches: [main]
