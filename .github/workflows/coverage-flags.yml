@@ -76,4 +76,5 @@ jobs:
         with:
           directory: coverage
           token: ${{ secrets.CODECOV_TOKEN }}
+          flags: "ruby-${{ matrix.ruby-version }}"
           fail_ci_if_error: true
