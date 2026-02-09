@@ -26,7 +26,7 @@ jobs:
     timeout-minutes: 3
     
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - uses: ruby/setup-ruby@v1
         with:
@@ -39,7 +39,7 @@ jobs:
       - run: sudo apt install tree
       - run: tree -a coverage
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v6
         with:
           name: "coverage-ruby-${{ matrix.ruby-version }}"
           path: coverage/ruby-*
@@ -63,9 +63,9 @@ jobs:
     timeout-minutes: 3
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v7
         with:
           pattern: "coverage-ruby-${{ matrix.ruby-version }}*"
           path: coverage
@@ -74,7 +74,7 @@ jobs:
       - run: tree -a coverage
 
       - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@v5
         with:
           directory: coverage
           token: ${{ secrets.CODECOV_TOKEN }}
